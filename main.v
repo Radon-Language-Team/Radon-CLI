@@ -1,23 +1,34 @@
 module main
 
-// import os { input, execute }
-import update
-import logs
+import symlink
+import help
+import term
+import os
 
 fn main() {
-	logs.print_in_color('34', 'Welcome to the Radon CLI Tool')
-	logs.print_in_color('34', 'This tool allows you to run Radon code from the command line')
-	logs.print_in_color('34', 'Use the command "radon run <file>" to run a Radon file')
+	term.clear()
+	radon_ascii_art := "
+ ____             
+| ___ \\        | |            
+| |_/ /__ _  __| | ___  _ __  
+|    // _` |/ _` |/ _ \\| '_ \\ 
+| |\\ \\ (_| | (_| | (_) | | | |
+\\_| \\_\\__,_|\\__,_|\\___/|_| |_|  
+"
 
-	println($env('GITHUB_PERSONAL_TOKEN'))
+	println(term.blue(radon_ascii_art))
+	println(term.bg_blue('CLI for the Radon Programming Language'))
 
-	// command_to_run := input('Waiting for input...')
+	println('Please run ${term.blue('link')} to symlink the radon executable to /usr/local/bin/radon. \nFor any other commands, run ${term.blue('help')}.')
+	command := os.input('')
 
-	// Check if empty
-	// if command_to_run == '' {
-	//	logs.print_in_color('31', 'No command entered')
-	//	return
-	// }
-
-	update.update_radon()
+	if command == 'link' {
+		symlink.link()
+	} else if command == 'help' {
+		help.help()
+	} else if command == 'unlink' {
+		symlink.unlink()
+	} else {
+		println('Command not found. Run ${term.blue('help')} for a list of commands.')
+	}
 }
